@@ -19,7 +19,7 @@ function App() {
         return res.json();
       })
       .then((data) => {
-        setTodos(data);
+        setTodos(data ? data.data : []);
         console.log("Data Fetched", data);
       })
       .catch((error) => {
@@ -42,8 +42,9 @@ function App() {
       }),
     }).then((data) => {
       getTodos();
+      setTitle("");
+      setDescription("");
     });
-  
   }
 
   function checkTodo(id, completed) {
@@ -128,9 +129,9 @@ function App() {
 
       <div className="mt-4 w-full max-w-md">
         <ul className="bg-white p-4 rounded-xl shadow-gray-400 shadow-lg">
-          {todos.map(({id:_id, title, description, completed }) => (
+          {todos.map(({ _id, title, description, completed }) => (
             <li
-              key={id}
+              key={_id}
               className="flex items-center justify-between mb-2 rounded-lg px-2 py-3 bg-slate-100"
             >
               <div>
@@ -138,13 +139,13 @@ function App() {
                 <p className="text-sm text-gray-600 ">{description}</p>
               </div>
               <div className="flex">
-                <button onClick={() => checkTodo(id, completed)}>
+                <button onClick={() => checkTodo(_id, completed)}>
                   <img src={completed ? checkIcon : unCheckIcon} alt="" />
                 </button>
                 {/* <button onClick={() => updateTodo(id, title, description)}>
                     <img src={editIcon} alt="" />
                   </button> */}
-                <button onClick={() => deleteTodo(id)}>
+                <button onClick={() => deleteTodo(_id)}>
                   <img src={trashIcon} alt="" />
                 </button>
               </div>
